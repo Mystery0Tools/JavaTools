@@ -29,5 +29,8 @@ object ResponseFactory {
     fun failure(code: BaseResponseCode, message: String?): Response<Any> = origin(code.code, null, message)
 
     @JvmStatic
+    fun failure(code: Int, message: String?): Response<Any> = origin(code, null, message)
+
+    @JvmStatic
     fun <T> origin(code: Int, data: T?, message: String?): Response<T> = Response(code, data, message)
 }
