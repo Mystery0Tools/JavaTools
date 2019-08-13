@@ -4,7 +4,6 @@ import vip.mystery0.tools.kotlin.factory.JsonFactoryKt;
 
 /**
  * @author mystery0
- * @date 2019-07-22
  */
 public class JsonFactory {
     public static <T> T fromJson(String json, Class<T> clazz) {

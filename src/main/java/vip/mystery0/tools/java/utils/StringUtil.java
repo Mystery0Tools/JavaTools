@@ -4,7 +4,6 @@ import vip.mystery0.tools.kotlin.utils.StringUtilKt;
 
 /**
  * @author mystery0
- * @date 2019-08-13
  */
 public class StringUtil {
     public static String md5(String text) {

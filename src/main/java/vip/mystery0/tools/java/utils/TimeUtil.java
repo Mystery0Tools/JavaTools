@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 /**
  * @author mystery0
- * @date 2019-08-13
  */
 public class TimeUtil {
     public static String formatTime(long time) {

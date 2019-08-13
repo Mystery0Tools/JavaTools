@@ -6,7 +6,6 @@ import java.io.File;
 
 /**
  * @author mystery0
- * @date 2019-08-13
  */
 public class FileUtil {
     public static String formatFileSize(File file) {
