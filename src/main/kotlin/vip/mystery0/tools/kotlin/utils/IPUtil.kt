@@ -7,22 +7,24 @@ import javax.servlet.http.HttpServletRequest
  * @return
  */
 fun HttpServletRequest.getClientIP(): String? {
-	var ip: String? = this.getHeader("X-Real-IP")
-	if (ip != null && ip.isNotEmpty())
-		return ip
-	if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
-		ip = this.getHeader("X-Forwarded-For")
-	if (ip != null && ip.isNotEmpty())
-		return ip
-	if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
-		ip = this.getHeader("Proxy-Client-IP")
-	if (ip != null && ip.isNotEmpty())
-		return ip
-	if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
-		ip = this.getHeader("WL-Proxy-Client-IP")
-	if (ip != null && ip.isNotEmpty())
-		return ip
-	if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
-		ip = this.remoteAddr
-	return ip
+    var ip: String? = this.getHeader("X-Real-IP")
+    if (ip != null && ip.isNotEmpty())
+        return ip
+    if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
+        ip = this.getHeader("X-Forwarded-For")
+    if (ip != null && ip.isNotEmpty())
+        return ip
+    if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
+        ip = this.getHeader("Proxy-Client-IP")
+    if (ip != null && ip.isNotEmpty())
+        return ip
+    if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
+        ip = this.getHeader("WL-Proxy-Client-IP")
+    if (ip != null && ip.isNotEmpty())
+        return ip
+    if (ip == null || ip.isEmpty() || "unknown".equals(ip, ignoreCase = true))
+        ip = this.remoteAddr
+    if (ip == "0:0:0:0:0:0:0:1")
+        ip = "127.0.0.1"
+    return ip
 }
