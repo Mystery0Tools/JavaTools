@@ -9,7 +9,6 @@ import java.util.function.Function;
 
 /**
  * @author mystery0
- * @date 2019-08-21
  */
 public class DataSetUtil {
     public static <T> PairArrayList<Pair2<T, T>> splitCollection(Collection<T> first,

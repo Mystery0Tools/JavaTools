@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 /**
  * @author mystery0
- * @date 2019-08-21
  */
 public class CollectionUtil {
     public static <T> List<T> emptyList() {
