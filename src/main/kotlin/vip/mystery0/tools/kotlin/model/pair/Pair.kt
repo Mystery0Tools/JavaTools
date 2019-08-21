@@ -6,6 +6,12 @@ import java.io.Serializable
  * @author mystery0
  * @date 2019-07-22
  */
+fun <T1, T2> Pair2<T1, T2>.toPair(): Pair<T1, T2> {
+    if (first == null || second == null)
+        throw NoSuchKeyException()
+    return Pair(first!!, second!!)
+}
+
 abstract class BasePair<T1>(open var first: T1?) : Serializable {
     override fun toString(): String {
         return "BasePair(first=$first)"
