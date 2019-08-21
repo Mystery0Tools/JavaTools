@@ -22,6 +22,9 @@ open class Pair2<T1, T2>(
     override var first: T1?,
     open var second: T2?
 ) : BasePair<T1>(first), Serializable {
+
+    constructor(pair: Pair<T1, T2>) : this(pair.first, pair.second)
+
     override fun toString(): String {
         return "Pair2(first=$first, second=$second)"
     }
