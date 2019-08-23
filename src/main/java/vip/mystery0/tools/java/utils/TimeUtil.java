@@ -2,6 +2,9 @@ package vip.mystery0.tools.java.utils;
 
 import vip.mystery0.tools.kotlin.utils.TimeUtilKt;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 /**
@@ -27,4 +30,18 @@ public class TimeUtil {
     public static String toTimeString(Calendar calendar) {
         return TimeUtilKt.toTimeString(calendar);
     }
+
+    public static String toDateTimeString(LocalDateTime localDateTime) {
+        return TimeUtilKt.toDateTimeString(localDateTime);
+    }
+
+    public static String toDateString(LocalDate localDate) {
+        return TimeUtilKt.toDateString(localDate);
+    }
+
+    public static String toTimeString(LocalTime localTime) {
+        return TimeUtilKt.toTimeString(localTime);
+    }
+
+
 }
