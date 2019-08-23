@@ -1,6 +1,10 @@
 package vip.mystery0.tools.kotlin.utils
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -41,6 +45,9 @@ fun Long.formatTime(): String {
 private val simpleDateFormat by lazy { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA) }
 private val showDateFormat by lazy { SimpleDateFormat("yyyy-MM-dd", Locale.CHINA) }
 private val showTimeFormat by lazy { SimpleDateFormat("HH:mm:ss", Locale.CHINA) }
+private val dateTimeFormat by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") }
+private val dateFormat by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
+private val TimeFormat by lazy { DateTimeFormatter.ofPattern("HH:mm:ss") }
 
 fun Long.toCalendar(): Calendar {
     val calendar = Calendar.getInstance()
@@ -51,3 +58,7 @@ fun Long.toCalendar(): Calendar {
 fun Calendar.toDateTimeString(): String = simpleDateFormat.format(this.time)
 fun Calendar.toDateString(): String = showDateFormat.format(this.time)
 fun Calendar.toTimeString(): String = showTimeFormat.format(this.time)
+
+fun LocalDateTime.toDateTimeString(): String = dateTimeFormat.format(this)
+fun LocalDate.toDateString(): String = dateFormat.format(this)
+fun LocalTime.toTimeString(): String = TimeFormat.format(this)
