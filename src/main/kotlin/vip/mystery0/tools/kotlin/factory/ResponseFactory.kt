@@ -3,10 +3,16 @@ package vip.mystery0.tools.kotlin.factory
 import vip.mystery0.tools.kotlin.config.BaseResponseCode
 import vip.mystery0.tools.kotlin.model.Response
 
-/**
- * @author mystery0
- * @date 2019-07-22
- */
+fun success(): Response<Any> = ResponseFactory.success()
+fun <T> success(data: T?): Response<T> = ResponseFactory.success(data)
+fun <T> success(data: T?, message: String?): Response<T> = ResponseFactory.success(data, message)
+fun failure(): Response<Any> = ResponseFactory.failure()
+fun failure(message: String?): Response<Any> = ResponseFactory.failure(message)
+fun failure(code: BaseResponseCode): Response<Any> = ResponseFactory.failure(code)
+fun failure(code: BaseResponseCode, message: String?): Response<Any> = ResponseFactory.failure(code, message)
+fun failure(code: Int, message: String?): Response<Any> = ResponseFactory.failure(code, message)
+fun <T> origin(code: Int, data: T?, message: String?): Response<T> = ResponseFactory.origin(code, data, message)
+
 object ResponseFactory {
     @JvmStatic
     fun success(): Response<Any> = success(null)

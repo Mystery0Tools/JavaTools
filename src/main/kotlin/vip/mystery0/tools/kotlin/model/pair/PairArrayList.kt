@@ -141,7 +141,7 @@ class PairArrayList<P : BasePair<*>> : ArrayList<P>() {
             }
             return null
         } else {
-            throw NoSuchKeyException("列表中的数据没有seventh这个键")
+            throw NoSuchKeyException("列表中的数据没有eighth这个键")
         }
     }
 
@@ -159,7 +159,7 @@ class PairArrayList<P : BasePair<*>> : ArrayList<P>() {
             }
             return null
         } else {
-            throw NoSuchKeyException("列表中的数据没有seventh这个键")
+            throw NoSuchKeyException("列表中的数据没有ninth这个键")
         }
     }
 
@@ -177,7 +177,7 @@ class PairArrayList<P : BasePair<*>> : ArrayList<P>() {
             }
             return null
         } else {
-            throw NoSuchKeyException("列表中的数据没有seventh这个键")
+            throw NoSuchKeyException("列表中的数据没有tenth这个键")
         }
     }
 
