@@ -52,7 +52,7 @@ fun File.copyTo(file: File){
     try {
         fileInputStream = FileInputStream(this)
         fileOutputStream = FileOutputStream(file)
-        IOUtils.copy(fileInputStream, fileOutputStream)
+        fileInputStream.copyTo(fileOutputStream)
     } catch (e: IOException) {
         e.printStackTrace()
         throw ToolsException(e)

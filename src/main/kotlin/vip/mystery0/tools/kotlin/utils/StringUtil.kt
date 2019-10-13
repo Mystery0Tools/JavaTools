@@ -1,6 +1,7 @@
 package vip.mystery0.tools.kotlin.utils
 
 import java.security.MessageDigest
+import java.util.*
 
 fun String.md5(): String = toByteArray().md5()
 
@@ -56,3 +57,10 @@ private fun toHex(byteArray: ByteArray): String =
         }
         toString()
     }
+
+fun ByteArray.base64(): ByteArray = Base64.getEncoder().encode(this)
+fun ByteArray.deBase64(): ByteArray = Base64.getDecoder().decode(this)
+fun ByteArray.base64String(): String = String(base64())
+fun ByteArray.deBase64String(): String = String(deBase64())
+fun String.base64(): String = toByteArray().base64String()
+fun String.deBase64(): String = toByteArray().deBase64String()
