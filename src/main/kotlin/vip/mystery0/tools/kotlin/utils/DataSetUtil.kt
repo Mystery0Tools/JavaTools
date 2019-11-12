@@ -7,6 +7,11 @@ import vip.mystery0.tools.kotlin.model.pair.PairArrayList
  * @author mystery0
  * @date 2019-08-21
  */
+fun <T : Any> T?.require(): T {
+    requireNotNull(this) { "Required value was null." }
+    return this
+}
+
 fun <T> splitCollection(first: Collection<T>, second: Collection<T>, function: (T) -> Any): PairArrayList<Pair2<T, T>> {
     val result = PairArrayList<Pair2<T, T>>()
     if (first.isEmpty() && second.isEmpty())
