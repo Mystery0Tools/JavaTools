@@ -12,4 +12,7 @@ object JsonFactory {
 
 fun <T> String.fromJson(clazz: Class<T>): T = JsonFactory.objectMapper.readValue(this, clazz)
 
-fun Any.toJson(): String = JsonFactory.objectMapper.writeValueAsString(this)
+fun <T : Any> T?.toJson(): String? {
+    if (this == null) return null
+    return JsonFactory.objectMapper.writeValueAsString(this)
+}
