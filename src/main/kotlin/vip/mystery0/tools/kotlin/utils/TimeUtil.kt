@@ -1,9 +1,8 @@
 package vip.mystery0.tools.kotlin.utils
 
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -62,3 +61,5 @@ fun Calendar.toTimeString(): String = showTimeFormat.format(this.time)
 fun LocalDateTime.toDateTimeString(): String = dateTimeFormat.format(this)
 fun LocalDate.toDateString(): String = dateFormat.format(this)
 fun LocalTime.toTimeString(): String = TimeFormat.format(this)
+
+fun Instant.toTimestamp(): Timestamp = Timestamp.valueOf(LocalDateTime.ofInstant(this, ZoneId.of("Asia/Shanghai")))
