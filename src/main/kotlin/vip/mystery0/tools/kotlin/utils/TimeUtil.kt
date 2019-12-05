@@ -1,7 +1,6 @@
 package vip.mystery0.tools.kotlin.utils
 
 import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -41,25 +40,35 @@ fun Long.formatTime(): String {
     return sb.toString()
 }
 
-private val simpleDateFormat by lazy { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA) }
-private val showDateFormat by lazy { SimpleDateFormat("yyyy-MM-dd", Locale.CHINA) }
-private val showTimeFormat by lazy { SimpleDateFormat("HH:mm:ss", Locale.CHINA) }
-private val dateTimeFormat by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") }
-private val dateFormat by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
-private val TimeFormat by lazy { DateTimeFormatter.ofPattern("HH:mm:ss") }
-
-fun Long.toCalendar(): Calendar {
-    val calendar = Calendar.getInstance()
-    calendar.timeInMillis = this
-    return calendar
-}
-
-fun Calendar.toDateTimeString(): String = simpleDateFormat.format(this.time)
-fun Calendar.toDateString(): String = showDateFormat.format(this.time)
-fun Calendar.toTimeString(): String = showTimeFormat.format(this.time)
-
-fun LocalDateTime.toDateTimeString(): String = dateTimeFormat.format(this)
-fun LocalDate.toDateString(): String = dateFormat.format(this)
-fun LocalTime.toTimeString(): String = TimeFormat.format(this)
-
 fun Instant.toTimestamp(): Timestamp = Timestamp.valueOf(LocalDateTime.ofInstant(this, ZoneId.of("Asia/Shanghai")))
+
+private val DATE_FORMATTER by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
+private val TIME_FORMATTER by lazy { DateTimeFormatter.ofPattern("HH:mm:ss") }
+private val DATE_TIME_FORMATTER by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") }
+
+private fun getFormatter(pattern: String): DateTimeFormatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
+
+fun LocalDateTime.formatDate(): String = formatLocalDataTime(DATE_FORMATTER)
+fun Instant.formatDate(): String = formatInstant(DATE_FORMATTER)
+
+fun LocalDateTime.formatTime(): String = formatLocalDataTime(TIME_FORMATTER)
+fun Instant.formatTime(): String = formatInstant(TIME_FORMATTER)
+
+fun LocalDateTime.formatDateTime(): String = formatLocalDataTime(DATE_TIME_FORMATTER)
+fun Instant.formatDateTime(): String = formatInstant(DATE_TIME_FORMATTER)
+
+fun String.parseDate(): LocalDateTime = LocalDateTime.parse(this, DATE_FORMATTER)
+fun String.parseTime(): LocalDateTime = LocalDateTime.parse(this, TIME_FORMATTER)
+fun String.parseDateTime(): LocalDateTime = LocalDateTime.parse(this, DATE_TIME_FORMATTER)
+
+fun LocalDateTime.formatLocalDataTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
+    formatLocalDataTime(getFormatter(pattern))
+
+fun LocalDateTime.formatLocalDataTime(dateTimeFormatter: DateTimeFormatter = DATE_TIME_FORMATTER): String =
+    dateTimeFormatter.format(this)
+
+fun Instant.formatInstant(pattern: String = "yyyy-MM-dd HH:mm:ss"): String =
+    formatInstant(getFormatter(pattern))
+
+fun Instant.formatInstant(dateTimeFormatter: DateTimeFormatter = DATE_TIME_FORMATTER): String =
+    LocalDateTime.ofInstant(this, ZoneId.systemDefault()).formatLocalDataTime(dateTimeFormatter)
