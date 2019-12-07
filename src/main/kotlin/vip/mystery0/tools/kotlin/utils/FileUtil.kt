@@ -1,7 +1,6 @@
 package vip.mystery0.tools.kotlin.utils
 
 import vip.mystery0.tools.java.utils.IOUtils
-import vip.mystery0.tools.kotlin.ToolsException
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -38,15 +37,15 @@ fun Long.formatFileSize(decimalNum: Int = 2): String {
     return fileSizeString
 }
 
-fun File.copyTo(file: File){
+fun File.copyTo(file: File) {
     if (!this.exists())
-        throw ToolsException(ToolsException.FILE_NOT_EXIST, "源文件不存在！")
+        throw RuntimeException("源文件不存在！")
     if (!this.isFile)
-        throw ToolsException(ToolsException.NOT_FILE, "该项不是文件：${this.name}(${this.absolutePath})")
+        throw RuntimeException("该项不是文件：${this.name}(${this.absolutePath})")
     if (file.parentFile == null)
-        throw ToolsException(ToolsException.MAKE_DIR_ERROR, "输出目录创建失败！")
+        throw RuntimeException("输出目录创建失败！")
     if (!file.parentFile!!.exists() && !file.parentFile!!.mkdirs())
-        throw ToolsException(ToolsException.MAKE_DIR_ERROR, "输出目录创建失败！")
+        throw RuntimeException("输出目录创建失败！")
     var fileInputStream: FileInputStream? = null
     var fileOutputStream: FileOutputStream? = null
     try {
@@ -55,7 +54,7 @@ fun File.copyTo(file: File){
         fileInputStream.copyTo(fileOutputStream)
     } catch (e: IOException) {
         e.printStackTrace()
-        throw ToolsException(e)
+        throw RuntimeException(e)
     } finally {
         IOUtils.closeQuietly(fileInputStream)
         IOUtils.closeQuietly(fileOutputStream)
