@@ -33,3 +33,6 @@ fun HttpServletRequest.getClientIP(): String? {
         ip = "127.0.0.1"
     return ip
 }
+
+val HttpServletRequest.host: String
+    get() = requestURL.substring(0, requestURL.length - requestURI.length)
