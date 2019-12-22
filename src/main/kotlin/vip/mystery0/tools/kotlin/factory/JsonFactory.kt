@@ -15,7 +15,7 @@ fun <T> String.fromJson(clazz: Class<T>): T = JsonFactory.objectMapper.readValue
 
 fun <T> String.fromJson(typeReference: TypeReference<T>): T = JsonFactory.objectMapper.readValue(this, typeReference)
 
-fun <T : Any> T?.toJson(): String? {
-    if (this == null) return null
+fun <T : Any?> T.toJson(): String {
+    if (this == null) return ""
     return JsonFactory.objectMapper.writeValueAsString(this)
 }
