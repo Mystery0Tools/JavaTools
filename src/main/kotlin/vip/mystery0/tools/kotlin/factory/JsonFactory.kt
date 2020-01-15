@@ -3,6 +3,7 @@ package vip.mystery0.tools.kotlin.factory
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.lang.reflect.Type
+import kotlin.reflect.KClass
 
 /**
  * @author mystery0
@@ -11,6 +12,8 @@ import java.lang.reflect.Type
 object JsonFactory {
     val objectMapper: ObjectMapper by lazy { ObjectMapper() }
 }
+
+fun <T : Any> String.fromJson(clazz: KClass<T>): T = JsonFactory.objectMapper.readValue(this, clazz.java)
 
 fun <T> String.fromJson(clazz: Class<T>): T = JsonFactory.objectMapper.readValue(this, clazz)
 
