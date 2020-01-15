@@ -12,7 +12,6 @@ buildscript {
 
 plugins {
     kotlin("jvm") version "1.3.61"
-    kotlin("plugin.spring") version "1.3.61"
 }
 
 group = "vip.mystery0.tools"
@@ -25,11 +24,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
     compileOnly("javax.servlet:servlet-api:2.5")
     compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9")
-    testImplementation("junit:junit:4.13")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.5.2")
 }
 
 tasks.withType<Test> {
