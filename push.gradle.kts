@@ -14,6 +14,11 @@ buildscript {
 
 apply<ReleasePlugin>()
 
+task("sourcesJar", Jar::class) {
+    archiveClassifier.set("sources")
+    from(PublishConfig.sourceFiles)
+}
+
 val USER = "BINTRAY_USER"
 val KEY = "BINTRAY_KEY"
 
@@ -51,7 +56,7 @@ task("fuck") {
     }
     doLast {
         exec {
-            commandLine("./gradlew", "clean", "build", "bintrayUpload")
+            commandLine("./gradlew", "clean", "sourcesJar", "build", "bintrayUpload")
         }
     }
 }
