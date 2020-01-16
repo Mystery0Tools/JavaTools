@@ -56,7 +56,7 @@ task("fuck") {
     }
     doLast {
         exec {
-            commandLine("./gradlew", "clean", "sourcesJar", "build", "bintrayUpload")
+            commandLine("./gradlew", "clean", "test", "sourcesJar", "build", "bintrayUpload")
         }
     }
 }
