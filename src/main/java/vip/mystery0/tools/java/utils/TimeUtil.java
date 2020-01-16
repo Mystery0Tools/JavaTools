@@ -2,9 +2,7 @@ package vip.mystery0.tools.java.utils;
 
 import vip.mystery0.tools.kotlin.utils.TimeUtilKt;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -35,11 +33,11 @@ public class TimeUtil {
         return TimeUtilKt.formatDateTime(instant);
     }
 
-    public static LocalDateTime parseDate(String string) {
+    public static LocalDate parseDate(String string) {
         return TimeUtilKt.parseDate(string);
     }
 
-    public static LocalDateTime parseTime(String string) {
+    public static LocalTime parseTime(String string) {
         return TimeUtilKt.parseTime(string);
     }
 
