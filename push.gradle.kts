@@ -93,12 +93,6 @@ tasks {
     }
 }
 
-task("moveJar", Copy::class) {
-    from(file("$buildDir/libs/springboot-all.jar"))
-    into(file("$buildDir/libs"))
-    rename("(.+)-all(.+)", "$1$2")
-}
-
 task("fuck") {
     doFirst {
         if (NEXUS_USER.isNullOrBlank() || NEXUS_KEY.isNullOrBlank()) throw kotlin.Exception("missing NEXUS_USER or NEXUS_KEY")
@@ -108,14 +102,13 @@ task("fuck") {
     doLast {
         exec {
             if (PublishConfig.POM_SNAPSHOT)
-                commandLine("./gradlew", "clean", "sourcesJar", "shadowJar", "moveJar", "uploadArchives")
+                commandLine("./gradlew", "clean", "sourcesJar", "build", "uploadArchives")
             else
                 commandLine(
                     "./gradlew",
                     "clean",
                     "sourcesJar",
-                    "shadowJar",
-                    "moveJar",
+                    "build",
                     "uploadArchives",
                     "bintrayUpload"
                 )
