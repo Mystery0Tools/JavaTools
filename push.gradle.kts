@@ -92,7 +92,7 @@ task("fuck") {
     doLast {
         exec {
             if (PublishConfig.POM_SNAPSHOT)
-                commandLine("./gradlew", "clean", "test", "sourcesJar", "build", "bintrayUpload")
+                commandLine("./gradlew", "clean", "test", "sourcesJar", "build", "uploadArchives")
             else
                 commandLine(
                     "./gradlew",
