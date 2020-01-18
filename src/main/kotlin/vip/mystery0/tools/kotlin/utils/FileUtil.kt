@@ -20,7 +20,7 @@ fun File.formatFileSize(decimalNum: Int = 2): String = if (exists()) length().fo
  * @return 格式化之后的字符串
  */
 fun Long.formatFileSize(decimalNum: Int = 2): String {
-    if (this == 0L)
+    if (this <= 0L)
         return "0B"
     val formatString = StringBuilder()
     formatString.append("#.")
