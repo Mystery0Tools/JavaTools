@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        maven("http://maven.aliyun.com/nexus/content/groups/public/")
+        maven("${PublishConfig.NEXUS_URL}/repository/maven-public/")
         mavenCentral()
     }
     dependencies {
@@ -17,9 +17,14 @@ plugins {
 group = "vip.mystery0.tools"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+//val nexusUrl = System.getenv("NEXUS_URL") ?: "https://nexus3.mystery0.vip"
+//val nexusUrl = System.getenv("NEXUS_URL") ?: "http://mirror.nexus3.mystery0.vip:12315"
+val nexusUrl = System.getenv("NEXUS_URL") ?: "http://192.168.2.80:8081"
+
 repositories {
-    maven("http://maven.aliyun.com/nexus/content/groups/public/")
-    jcenter()
+    maven("$nexusUrl/repository/maven-public/")
+    maven("$nexusUrl/repository/maven-releases/")
+    maven("$nexusUrl/repository/maven-snapshots/")
     mavenCentral()
 }
 
