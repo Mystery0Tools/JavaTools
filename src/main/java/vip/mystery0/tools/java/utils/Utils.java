@@ -9,7 +9,7 @@ public class Utils {
             return null;
         }
         if (!clazz.isEnum()) {
-            throw new RuntimeException("这个类不是枚举类");
+            throw new RuntimeException("this class is not an enum class");
         }
         for (T constant : clazz.getEnumConstants()) {
             if (constant.name().equals(name.toUpperCase())) {
