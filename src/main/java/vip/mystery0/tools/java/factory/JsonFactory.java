@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
  * @author mystery0
  */
 public class JsonFactory {
+
     public static <T> T fromJson(String json, Class<T> clazz) {
         return JsonFactoryKt.fromJson(json, clazz);
     }
