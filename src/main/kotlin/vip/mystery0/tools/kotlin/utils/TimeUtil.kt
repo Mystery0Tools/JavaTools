@@ -17,6 +17,15 @@ enum class TimeUnit(val level: Int, val unit: String, val interval: Int) {
     DAY(4, "天", 1)
 }
 
+private fun getTimeUnitByLevel(level: Int): TimeUnit? = when (level) {
+    0 -> TimeUnit.MILLISECOND
+    1 -> TimeUnit.SECOND
+    2 -> TimeUnit.MINUTE
+    3 -> TimeUnit.HOUR
+    4 -> TimeUnit.DAY
+    else -> null
+}
+
 fun Long.formatTime(
     minTimeUnit: TimeUnit = TimeUnit.MILLISECOND,
     maxTimeUnit: TimeUnit = TimeUnit.DAY
@@ -34,70 +43,27 @@ fun Long.formatTime(
     if (maxTimeUnit == TimeUnit.MILLISECOND) return "$this${TimeUnit.MILLISECOND.unit}"
 
     val day = this / dd
-    var hour = (this - day * dd) / hh
-    var minute = (this - day * dd - hour * hh) / mi
-    var second = (this - day * dd - hour * hh - minute * mi) / ss
-    var milliSecond = this % ss
-
+    val hour = (this - day * dd) / hh
+    val minute = (this - day * dd - hour * hh) / mi
+    val second = (this - day * dd - hour * hh - minute * mi) / ss
+    val milliSecond = this % ss
+    val array = arrayOf(day, hour, minute, second, milliSecond)
     val sb = StringBuffer()
-    if (day > 0) {
-        val unit = TimeUnit.DAY
-        val nextUnit = TimeUnit.HOUR
-        if (maxTimeUnit.level < unit.level) {
-            hour += day * nextUnit.interval
-        } else {
-            sb.append(day).append(unit.unit)
+    for (index in array.indices) {
+        val unit = getTimeUnitByLevel(array.size - index - 1)!!
+        val nextUnit = getTimeUnitByLevel(array.size - index - 2)
+        if (array[index] > 0) {
+            if (maxTimeUnit.level < unit.level) {
+                if (nextUnit != null)
+                    array[index + 1] += array[index] * nextUnit.interval
+            } else {
+                sb.append(array[index]).append(unit.unit)
+            }
         }
-    }
-    if (minTimeUnit == TimeUnit.DAY) {
-        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
-        return sb.toString()
-    }
-    if (hour > 0) {
-        val unit = TimeUnit.HOUR
-        val nextUnit = TimeUnit.MINUTE
-        if (maxTimeUnit.level < unit.level) {
-            minute += hour * nextUnit.interval
-        } else {
-            sb.append(hour).append(unit.unit)
+        if (minTimeUnit == unit) {
+            if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
+            return sb.toString()
         }
-        if (minTimeUnit.level == unit.level) return sb.toString()
-    }
-    if (minTimeUnit == TimeUnit.HOUR) {
-        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
-        return sb.toString()
-    }
-    if (minute > 0) {
-        val unit = TimeUnit.MINUTE
-        val nextUnit = TimeUnit.SECOND
-        if (maxTimeUnit.level < unit.level) {
-            second += minute * nextUnit.interval
-        } else {
-            sb.append(minute).append(unit.unit)
-        }
-        if (minTimeUnit.level == unit.level) return sb.toString()
-    }
-    if (minTimeUnit == TimeUnit.MINUTE) {
-        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
-        return sb.toString()
-    }
-    if (second > 0) {
-        val unit = TimeUnit.SECOND
-        val nextUnit = TimeUnit.MILLISECOND
-        if (maxTimeUnit.level < unit.level) {
-            milliSecond += second * nextUnit.interval
-        } else {
-            sb.append(second).append(unit.unit)
-        }
-        if (minTimeUnit.level == unit.level) return sb.toString()
-    }
-    if (minTimeUnit == TimeUnit.SECOND) {
-        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
-        return sb.toString()
-    }
-    if (milliSecond > 0) {
-        val unit = TimeUnit.MILLISECOND
-        sb.append(milliSecond).append(unit.unit)
     }
     return sb.toString()
 }
