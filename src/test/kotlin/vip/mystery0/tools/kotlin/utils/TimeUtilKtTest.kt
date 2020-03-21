@@ -29,6 +29,38 @@ internal class TimeUtilKtTest {
         Assertions.assertEquals(946742399999L.formatTime(maxTimeUnit = TimeUnit.MINUTE), "15779039分59秒999毫秒")
         Assertions.assertEquals(946742399999L.formatTime(maxTimeUnit = TimeUnit.SECOND), "946742399秒999毫秒")
         Assertions.assertEquals(946742399999L.formatTime(maxTimeUnit = TimeUnit.MILLISECOND), "946742399999毫秒")
+        Assertions.assertEquals(
+            946742399999L.formatTime(maxTimeUnit = TimeUnit.DAY, minTimeUnit = TimeUnit.DAY),
+            "10957天"
+        )
+        Assertions.assertEquals(
+            946742399999L.formatTime(maxTimeUnit = TimeUnit.HOUR, minTimeUnit = TimeUnit.HOUR),
+            "262983小时"
+        )
+        Assertions.assertEquals(
+            946742399999L.formatTime(maxTimeUnit = TimeUnit.MINUTE, minTimeUnit = TimeUnit.MINUTE),
+            "15779039分"
+        )
+        Assertions.assertEquals(
+            946742399999L.formatTime(maxTimeUnit = TimeUnit.SECOND, minTimeUnit = TimeUnit.SECOND),
+            "946742399秒"
+        )
+        Assertions.assertEquals(
+            946742399999L.formatTime(
+                maxTimeUnit = TimeUnit.MILLISECOND,
+                minTimeUnit = TimeUnit.MILLISECOND
+            ), "946742399999毫秒"
+        )
+        Assertions.assertEquals(0L.formatTime(minTimeUnit = TimeUnit.DAY), "0天")
+        Assertions.assertEquals(0L.formatTime(minTimeUnit = TimeUnit.HOUR), "0小时")
+        Assertions.assertEquals(0L.formatTime(minTimeUnit = TimeUnit.MINUTE), "0分")
+        Assertions.assertEquals(0L.formatTime(minTimeUnit = TimeUnit.SECOND), "0秒")
+        Assertions.assertEquals(0L.formatTime(minTimeUnit = TimeUnit.MILLISECOND), "0毫秒")
+        Assertions.assertEquals(1L.formatTime(minTimeUnit = TimeUnit.DAY), "0天")
+        Assertions.assertEquals(1L.formatTime(minTimeUnit = TimeUnit.HOUR), "0小时")
+        Assertions.assertEquals(1L.formatTime(minTimeUnit = TimeUnit.MINUTE), "0分")
+        Assertions.assertEquals(1L.formatTime(minTimeUnit = TimeUnit.SECOND), "0秒")
+        Assertions.assertEquals(1L.formatTime(minTimeUnit = TimeUnit.MILLISECOND), "1毫秒")
         println(localDate.atStartOfDay().formatDate())
         println(localDate.atStartOfDay().formatTime())
         println(localDate.atStartOfDay().formatDateTime())

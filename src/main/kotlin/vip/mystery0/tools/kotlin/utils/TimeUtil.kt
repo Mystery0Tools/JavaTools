@@ -48,7 +48,10 @@ fun Long.formatTime(
         } else {
             sb.append(day).append(unit.unit)
         }
-        if (minTimeUnit.level == unit.level) return sb.toString()
+    }
+    if (minTimeUnit == TimeUnit.DAY) {
+        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
+        return sb.toString()
     }
     if (hour > 0) {
         val unit = TimeUnit.HOUR
@@ -60,6 +63,10 @@ fun Long.formatTime(
         }
         if (minTimeUnit.level == unit.level) return sb.toString()
     }
+    if (minTimeUnit == TimeUnit.HOUR) {
+        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
+        return sb.toString()
+    }
     if (minute > 0) {
         val unit = TimeUnit.MINUTE
         val nextUnit = TimeUnit.SECOND
@@ -70,6 +77,10 @@ fun Long.formatTime(
         }
         if (minTimeUnit.level == unit.level) return sb.toString()
     }
+    if (minTimeUnit == TimeUnit.MINUTE) {
+        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
+        return sb.toString()
+    }
     if (second > 0) {
         val unit = TimeUnit.SECOND
         val nextUnit = TimeUnit.MILLISECOND
@@ -79,6 +90,10 @@ fun Long.formatTime(
             sb.append(second).append(unit.unit)
         }
         if (minTimeUnit.level == unit.level) return sb.toString()
+    }
+    if (minTimeUnit == TimeUnit.SECOND) {
+        if (sb.isEmpty()) sb.append(0).append(minTimeUnit.unit)
+        return sb.toString()
     }
     if (milliSecond > 0) {
         val unit = TimeUnit.MILLISECOND
