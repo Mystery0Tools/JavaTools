@@ -10,20 +10,29 @@ import kotlin.reflect.KClass
  * @date 2019-07-22
  */
 object JsonFactory {
-    val objectMapper: ObjectMapper by lazy { ObjectMapper() }
+    private var objectMapper: ObjectMapper? = null
+
+    fun getObjectMapper(): ObjectMapper = if (objectMapper == null) {
+        objectMapper = ObjectMapper()
+        objectMapper!!
+    } else objectMapper!!
+
+    fun setObjectMapper(objectMapper: ObjectMapper) {
+        this.objectMapper = objectMapper
+    }
 }
 
-fun <T : Any> String.fromJson(clazz: KClass<T>): T = JsonFactory.objectMapper.readValue(this, clazz.java)
+fun <T : Any> String.fromJson(clazz: KClass<T>): T = JsonFactory.getObjectMapper().readValue(this, clazz.java)
 
-fun <T> String.fromJson(clazz: Class<T>): T = JsonFactory.objectMapper.readValue(this, clazz)
+fun <T> String.fromJson(clazz: Class<T>): T = JsonFactory.getObjectMapper().readValue(this, clazz)
 
-fun <T> String.fromJson(typeReference: TypeReference<T>): T = JsonFactory.objectMapper.readValue(this, typeReference)
+fun <T> String.fromJson(typeReference: TypeReference<T>): T = JsonFactory.getObjectMapper().readValue(this, typeReference)
 
-fun <T> String.fromJson(type: Type): T = JsonFactory.objectMapper.readValue(this, object : TypeReference<T>() {
+fun <T> String.fromJson(type: Type): T = JsonFactory.getObjectMapper().readValue(this, object : TypeReference<T>() {
     override fun getType(): Type = type
 })
 
 fun <T : Any?> T.toJson(): String {
     if (this == null) return ""
-    return JsonFactory.objectMapper.writeValueAsString(this)
+    return JsonFactory.getObjectMapper().writeValueAsString(this)
 }
