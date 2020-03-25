@@ -1,5 +1,6 @@
 package vip.mystery0.tools.kotlin.utils
 
+import vip.mystery0.tools.kotlin.model.LRUCache
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -8,36 +9,37 @@ import java.util.*
  * @author mystery0
  * Create at 2020/3/21
  */
-private val DATE_FORMATTER by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd") }
-private val TIME_FORMATTER by lazy { DateTimeFormatter.ofPattern("HH:mm:ss") }
-private val DATE_TIME_FORMATTER by lazy { DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss") }
+private val formatterLRUCache by lazy { LRUCache<DateTimeFormatter>(5) }
 
-private fun getFormatter(pattern: String?): DateTimeFormatter? =
-    if (pattern == null) null else DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
+fun getFormatter(pattern: String): DateTimeFormatter = formatterLRUCache.getOrElse(pattern) {
+    val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
+    formatterLRUCache[pattern] = formatter
+    formatter
+}
 
-fun LocalDateTime.formatDate(): String = formatLocalDataTime(DATE_FORMATTER)
-fun LocalDate.formatDate(): String = atStartOfDay().formatLocalDataTime(DATE_FORMATTER)
-fun Instant.formatDate(): String = formatInstant(DATE_FORMATTER)
+fun LocalDateTime.formatDate(): String = formatLocalDataTime(getFormatter("yyyy-MM-dd"))
+fun LocalDate.formatDate(): String = atStartOfDay().formatLocalDataTime(getFormatter("yyyy-MM-dd"))
+fun Instant.formatDate(): String = formatInstant(getFormatter("yyyy-MM-dd"))
 
-fun LocalDateTime.formatTime(): String = formatLocalDataTime(TIME_FORMATTER)
-fun LocalTime.formatTime(): String = atDate(LocalDate.now()).formatLocalDataTime(TIME_FORMATTER)
-fun Instant.formatTime(): String = formatInstant(TIME_FORMATTER)
+fun LocalDateTime.formatTime(): String = formatLocalDataTime(getFormatter("HH:mm:ss"))
+fun LocalTime.formatTime(): String = atDate(LocalDate.now()).formatLocalDataTime(getFormatter("HH:mm:ss"))
+fun Instant.formatTime(): String = formatInstant(getFormatter("HH:mm:ss"))
 
-fun LocalDateTime.formatDateTime(): String = formatLocalDataTime(DATE_TIME_FORMATTER)
-fun Instant.formatDateTime(): String = formatInstant(DATE_TIME_FORMATTER)
+fun LocalDateTime.formatDateTime(): String = formatLocalDataTime(getFormatter("yyyy-MM-dd HH:mm:ss"))
+fun Instant.formatDateTime(): String = formatInstant(getFormatter("yyyy-MM-dd HH:mm:ss"))
 
-fun String.parseDate(): LocalDate = LocalDate.parse(this, DATE_FORMATTER)
-fun String.parseTime(): LocalTime = LocalTime.parse(this, TIME_FORMATTER)
-fun String.parseDateTime(): LocalDateTime = LocalDateTime.parse(this, DATE_TIME_FORMATTER)
+fun String.parseDate(): LocalDate = LocalDate.parse(this, getFormatter("yyyy-MM-dd"))
+fun String.parseTime(): LocalTime = LocalTime.parse(this, getFormatter("HH:mm:ss"))
+fun String.parseDateTime(): LocalDateTime = LocalDateTime.parse(this, getFormatter("yyyy-MM-dd HH:mm:ss"))
 
 fun LocalDateTime.formatLocalDataTime(pattern: String? = null): String =
-    formatLocalDataTime(getFormatter(pattern) ?: DATE_TIME_FORMATTER)
+    formatLocalDataTime(if (pattern == null) getFormatter("yyyy-MM-dd HH:mm:ss") else getFormatter(pattern))
 
-fun LocalDateTime.formatLocalDataTime(dateTimeFormatter: DateTimeFormatter = DATE_TIME_FORMATTER): String =
+fun LocalDateTime.formatLocalDataTime(dateTimeFormatter: DateTimeFormatter = getFormatter("yyyy-MM-dd HH:mm:ss")): String =
     dateTimeFormatter.format(this)
 
 fun Instant.formatInstant(pattern: String? = null): String =
-    formatInstant(getFormatter(pattern) ?: DATE_TIME_FORMATTER)
+    formatInstant(if (pattern == null) getFormatter("yyyy-MM-dd HH:mm:ss") else getFormatter(pattern))
 
-fun Instant.formatInstant(dateTimeFormatter: DateTimeFormatter = DATE_TIME_FORMATTER): String =
+fun Instant.formatInstant(dateTimeFormatter: DateTimeFormatter = getFormatter("yyyy-MM-dd HH:mm:ss")): String =
     LocalDateTime.ofInstant(this, ZoneId.systemDefault()).formatLocalDataTime(dateTimeFormatter)
