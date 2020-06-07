@@ -7,7 +7,7 @@ import java.io.File
 object PublishConfig {
     const val POM_GROUP_ID = "vip.mystery0.tools"
     const val POM_ARTIFACT_ID = "java.tools"
-    const val POM_VERSION = "1.2.9"
+    const val POM_VERSION = "1.3.0"
 
     const val POM_REPO_NAME = "tools"
     const val POM_USER_ORG = "mystery00"
