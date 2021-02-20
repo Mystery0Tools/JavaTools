@@ -26,7 +26,7 @@ object PublishConfig {
         if (isSnapshot(profile)) "$POM_VERSION-SNAPSHOT" else POM_VERSION
 
     private fun getPublishUri(profile: String): String {
-        val snapshotsRepoUrl = "${NEXUS_URL}/maven-snapshot/"
+        val snapshotsRepoUrl = "${NEXUS_URL}/maven-snapshots/"
         val releasesRepoUrl = "${NEXUS_URL}/maven-releases/"
         return if (isSnapshot(profile)) snapshotsRepoUrl else releasesRepoUrl
     }
