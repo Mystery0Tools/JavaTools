@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.get
  */
 object PublishConfig {
     private const val POM_GROUP_ID = "vip.mystery0.tools"
-    private const val POM_VERSION = "1.3.0"
+    private const val POM_VERSION = "1.4.0"
 
     private const val PROJECT_NAME = "tools"
     private const val PROJECT_DESCRIPTION = "Java 后台开发常用工具类"
