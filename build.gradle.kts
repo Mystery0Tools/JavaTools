@@ -1,37 +1,38 @@
+import PublishConfig.configPublications
+import PublishConfig.configPublish
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        val nexusUrl = System.getenv("NEXUS_URL") ?: PublishConfig.NEXUS_URL
-        maven("$nexusUrl/repository/maven-public/")
+        maven("http://nexus3.mystery0.vip/repository/maven-public/")
+        maven("https://maven.aliyun.com/repository/public/")
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
     }
 }
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.30"
+    `maven-publish`
 }
 
 group = "vip.mystery0.tools"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
-val nexusUrl = System.getenv("NEXUS_URL") ?: PublishConfig.NEXUS_URL
-
 repositories {
-    maven("$nexusUrl/repository/maven-public/")
-    maven("$nexusUrl/repository/maven-releases/")
-    maven("$nexusUrl/repository/maven-snapshots/")
+    maven("http://nexus3.mystery0.vip/repository/maven-public/")
+    maven("https://maven.aliyun.com/repository/public/")
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(kotlin("stdlib", org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION))
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    compileOnly("javax.servlet:servlet-api:2.5")
-    compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9")
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.1")
+    api("com.google.guava:guava:30.1-jre")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.5.2")
 }
 
@@ -47,7 +48,15 @@ tasks.withType<KotlinCompile> {
 }
 
 java {
-    PublishConfig.sourceFiles = sourceSets["main"].java.srcDirs
+    withSourcesJar()
 }
 
-apply(from = "push.gradle.kts")
+publishing {
+    configPublish(project)
+
+    publications {
+        create<MavenPublication>("maven") {
+            configPublications(project, "java.tools")
+        }
+    }
+}
