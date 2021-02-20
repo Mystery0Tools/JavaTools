@@ -56,7 +56,7 @@ publishing {
 
     publications {
         create<MavenPublication>("maven") {
-            configPublications(project, "java.tools")
+            configPublications(project, "java-tools")
         }
     }
 }
